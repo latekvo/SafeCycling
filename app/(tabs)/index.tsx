@@ -1,14 +1,66 @@
-import { StyleSheet, View, Text, ScrollView, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  SafeAreaView,
+  Pressable,
+  TextInput,
+} from "react-native";
+import {
+  Gesture,
+  GestureDetector,
+  ScrollView,
+} from "react-native-gesture-handler";
 
 import { HelloWave } from "@/components/HelloWave";
 
 export default function HomeScreen() {
+  const savedLocalizationFirst = (location: string) => {
+    console.log(location);
+  };
+
+  const savedLocalizationSecond = (location: string) => {
+    console.log(location);
+  };
+  const handleMap = () => {
+    console.log("map");
+  };
+
   return (
     <SafeAreaView>
       <ScrollView>
-        <View style={styles.titleContainer}>
-          <Text>Welcome!</Text>
-          <HelloWave />
+        <View style={styles.container}>
+          <Pressable style={styles.userPreview}>
+            <Text style={styles.userText}>User Info</Text>
+          </Pressable>
+          {/* Map Preview Section */}
+
+          <Pressable style={styles.mapPreview} onPress={() => handleMap()}>
+            <Text style={styles.mapText}>Map Preview</Text>
+          </Pressable>
+
+          {/* Saved Locations Section */}
+          <View style={styles.savedLocationsContainer}>
+            <Pressable
+              style={styles.savedLocationButton}
+              onPress={() => savedLocalizationFirst("Location 1")}
+            >
+              <Text style={styles.savedLocationText}>Location 1</Text>
+            </Pressable>
+            <Pressable
+              style={styles.savedLocationButton}
+              onPress={() => savedLocalizationSecond("Location 2")}
+            >
+              <Text style={styles.savedLocationText}>Location 2</Text>
+            </Pressable>
+          </View>
+
+          {/* Input for Location */}
+          <TextInput
+            style={styles.input}
+            placeholder="Enter location"
+            placeholderTextColor="#999"
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -16,20 +68,56 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
+  container: {
+    flex: 1,
+    backgroundColor: "#f2f2f2", // Light gray background
+    padding: 20,
+    justifyContent: "space-between",
+  },
+  userPreview: {
+    marginTop: 10,
+    // height: 30,
+    // backgroundColor: "black",
+    alignSelf: "flex-end",
+  },
+  userText: {
+    fontSize: 20,
+    color: "gray",
+  },
+  mapPreview: {
+    marginTop: 20,
+    backgroundColor: "#b0b0b0", // Medium gray for map preview
+    height: 400,
+    justifyContent: "center",
     alignItems: "center",
-    gap: 8,
+    borderRadius: 10,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  mapText: {
+    color: "#fff",
+    fontSize: 20,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
+  savedLocationsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+  },
+  savedLocationButton: {
+    backgroundColor: "#a0a0a0", // Darker gray for buttons
+    paddingVertical: 15,
+    paddingHorizontal: 50,
+    borderRadius: 10,
+  },
+  savedLocationText: {
+    color: "#fff", // White text on dark gray button
+    fontSize: 16,
+  },
+  input: {
+    backgroundColor: "#d0d0d0", // Light gray input field
+    height: 50,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    color: "#333", // Dark gray text
+    marginTop: 20,
   },
 });
