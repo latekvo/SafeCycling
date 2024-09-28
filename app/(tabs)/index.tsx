@@ -1,6 +1,7 @@
-import { StyleSheet, View, Text, ScrollView, SafeAreaView } from "react-native";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   return (
