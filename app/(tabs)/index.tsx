@@ -1,19 +1,17 @@
-import { Image, StyleSheet, Platform } from "react-native";
+import { StyleSheet, View, Text, ScrollView, SafeAreaView } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import { ScrollView } from "react-native-gesture-handler";
 
 export default function HomeScreen() {
   return (
-    <ScrollView>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={styles.titleContainer}>
+          <Text>Welcome!</Text>
+          <HelloWave />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
