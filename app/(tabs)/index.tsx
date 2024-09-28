@@ -1,18 +1,7 @@
-import {
-  StyleSheet,
-  View,
-  Text,
-  SafeAreaView,
-  Pressable,
-  TextInput,
-} from "react-native";
-import {
-  Gesture,
-  GestureDetector,
-  ScrollView,
-} from "react-native-gesture-handler";
+import { StyleSheet, View, Text, Pressable, TextInput } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
-import { HelloWave } from "@/components/HelloWave";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   const savedLocalizationFirst = (location: string) => {

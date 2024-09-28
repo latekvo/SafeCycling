@@ -1,6 +1,5 @@
-import { StyleSheet, View, Text, ScrollView, SafeAreaView } from "react-native";
-
-import { HelloWave } from "@/components/HelloWave";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function OptionsScreen() {
   return (
@@ -8,7 +7,6 @@ export default function OptionsScreen() {
       <ScrollView>
         <View style={styles.titleContainer}>
           <Text>Welcome!</Text>
-          <HelloWave />
         </View>
       </ScrollView>
     </SafeAreaView>
