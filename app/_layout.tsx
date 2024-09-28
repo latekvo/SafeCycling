@@ -38,6 +38,7 @@ export default function RootLayout() {
         <GestureHandlerRootView>
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="_maps" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />
           </Stack>
         </GestureHandlerRootView>

@@ -1,6 +1,8 @@
 import SearchBar from "@/components/SearchBar";
 import { StyleSheet, View, Text, Pressable, TextInput } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import MapView from "react-native-maps";
+import { useRouter } from "expo-router";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -15,6 +17,13 @@ export default function HomeScreen() {
   const handleMap = () => {
     console.log("map");
   };
+  const region = {
+    latitude: 50.0647,
+    longitude: 19.945,
+    latitudeDelta: 0.05,
+    longitudeDelta: 0.05,
+  };
+  const router = useRouter();
 
   return (
     <SafeAreaView>
@@ -25,8 +34,20 @@ export default function HomeScreen() {
           </Pressable>
           {/* Map Preview Section */}
 
-          <Pressable style={styles.mapPreview} onPress={() => handleMap()}>
-            <Text style={styles.mapText}>Map Preview</Text>
+          <Pressable
+            style={styles.mapPreview}
+            onPress={() => {
+              router.push("/_maps");
+            }}
+          >
+            <MapView
+              style={styles.map}
+              initialRegion={region}
+              showsUserLocation
+              scrollEnabled={false}
+              moveOnMarkerPress={false}
+            />
+            {/* <Text style={styles.mapText}>Map Preview</Text> */}
           </Pressable>
 
           {/* Saved Locations Section */}
@@ -74,7 +95,7 @@ const styles = StyleSheet.create({
   },
   mapPreview: {
     marginTop: 20,
-    backgroundColor: "#b0b0b0", // Medium gray for map preview
+    // backgroundColor: "#b0b0b0", // Medium gray for map preview
     height: 400,
     justifyContent: "center",
     alignItems: "center",
@@ -107,5 +128,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#333", // Dark gray text
     marginTop: 20,
+  },
+  map: {
+    height: "100%",
+    width: "100%",
   },
 });
