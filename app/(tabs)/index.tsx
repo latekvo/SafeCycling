@@ -1,3 +1,4 @@
+import SearchBar from "@/components/SearchBar";
 import { StyleSheet, View, Text, Pressable, TextInput } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -44,11 +45,9 @@ export default function HomeScreen() {
             </Pressable>
           </View>
 
-          {/* Input for Location */}
-          <TextInput
-            style={styles.input}
-            placeholder="Enter location"
-            placeholderTextColor="#999"
+          <SearchBar
+            onSearch={(newTerm) => console.log(newTerm)}
+            style={{ marginTop: 20 }}
           />
         </View>
       </ScrollView>
