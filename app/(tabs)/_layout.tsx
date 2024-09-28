@@ -1,7 +1,7 @@
-import { Tabs } from "expo-router";
 import React from "react";
+import { Tabs } from "expo-router";
 
-import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import Entypo from "@expo/vector-icons/Entypo";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 
@@ -16,14 +16,29 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
+        name="navigate"
+        options={{
+          title: "Navigate",
+          tabBarIcon: ({ color, focused }) => (
+            <Entypo name="compass" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="index"
         options={{
           title: "Home",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "home" : "home-outline"}
-              color={color}
-            />
+            <Entypo name="home" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="options"
+        options={{
+          title: "Other",
+          tabBarIcon: ({ color, focused }) => (
+            <Entypo name="dots-three-horizontal" size={24} color={color} />
           ),
         }}
       />
