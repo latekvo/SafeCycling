@@ -4,7 +4,7 @@ import MapView, { Marker, Polyline } from "react-native-maps";
 import SearchBar from "@/components/SearchBar";
 import { Link } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import * as Location from "expo-location";
 
@@ -26,21 +26,30 @@ export default function MapsScreen() {
 
   // Parse the 'cords' parameter since it's passed as a JSON string
   const coordinate = cords ? JSON.parse(cords) : [];
-  console.log(coordinate);
-
-  const region = {
-    latitude: coordinate[0].lat,
-    longitude: coordinate[0].lon,
-    latitudeDelta: 0.05,
-    longitudeDelta: 0.05,
-  };
 
   const location = { latitude: 50.083608, longitude: 19.940153 };
+  const [region, setRegion] = useState({
+    latitude: location.latitude,
+    longitude: location.longitude,
+    latitudeDelta: 0.05,
+    longitudeDelta: 0.05,
+  });
+  const [coordinates, setCoordinates] = useState<any>([]);
 
-  const coordinates = [
-    location,
-    { latitude: coordinate[0].lat, longitude: coordinate[0].lon },
-  ];
+  useEffect(() => {
+    if (coordinate?.[0]?.lat != undefined) {
+      setRegion({
+        latitude: coordinate[0].lat,
+        longitude: coordinate[0].lon,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05,
+      });
+      setCoordinates([
+        location,
+        { latitude: coordinate[0].lat, longitude: coordinate[0].lon },
+      ]);
+    }
+  }, []);
 
   // const [location, setLocation] = useState<any>();
   // const [errorMsg, setErrorMsg] = useState(String);
@@ -69,24 +78,28 @@ export default function MapsScreen() {
     <SafeAreaView>
       <View style={[styles.container, { width, height }]}>
         <MapView style={styles.map} initialRegion={region} showsUserLocation>
-          <Marker
-            coordinate={{
-              latitude: coordinate[0].lat,
-              longitude: coordinate[0].lon,
-            }}
-            pinColor={"#dc1619"} // any color
-            title={"Destination"}
-            description={"GG"}
-          />
+          {!!coordinate?.[0]?.lat && (
+            <Marker
+              coordinate={{
+                latitude: coordinate[0].lat,
+                longitude: coordinate[0].lon,
+              }}
+              pinColor={"#dc1619"} // any color
+              title={"Destination"}
+              description={"GG"}
+            />
+          )}
           {/* <Marker coordinate={destination} title="End" /> */}
-          <Polyline
-            coordinates={coordinates}
-            strokeWidth={4}
-            strokeColor="blue"
-          />
+          {!!coordinate?.[0]?.lon && (
+            <Polyline
+              coordinates={coordinates}
+              strokeWidth={4}
+              strokeColor="blue"
+            />
+          )}
         </MapView>
         <Link href="../" style={styles.backButton}>
-          <Ionicons name="arrow-back-circle" size={47} color="#6f4a4a" />
+          <Ionicons name="arrow-back-circle" size={47} color="#898989" />
         </Link>
         <View style={styles.searchBarBerground}>
           <SearchBar
