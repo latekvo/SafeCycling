@@ -75,13 +75,7 @@ export default function MapsScreen() {
           destinationCoordinate.lon
         )
       ) {
-        setCoordinates([
-          location,
-          {
-            latitude: destinationCoordinate.lat,
-            longitude: destinationCoordinate.lon,
-          },
-        ]);
+        setCoordinates(presentationCordinates);
       } else {
         // straight line from fixed point to destination
         setCoordinates([
