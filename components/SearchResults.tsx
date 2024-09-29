@@ -6,7 +6,9 @@ import {
   StyleProp,
   ViewStyle,
   ScrollView,
+  Pressable,
 } from "react-native";
+import { useRouter } from "expo-router";
 
 const SearchResults = ({
   searchQuery,
@@ -80,13 +82,30 @@ const SearchResults = ({
     }
   }, [searchQuery]);
 
+  const router = useRouter();
+
   return (
     <ScrollView style={[style]}>
-      {queryResult.map((value: { display_name: string }, index) => (
-        <View key={index} style={styles.locationCard}>
-          <Text>{value.display_name}</Text>
-        </View>
-      ))}
+      {queryResult.map(
+        (value: { display_name: string; lon: number; lat: number }, index) => (
+          <Pressable
+            key={index}
+            style={styles.locationCard}
+            onPress={() => {
+              router.push({
+                pathname: "/_maps",
+                params: {
+                  cords: JSON.stringify([{ lat: value.lat, lon: value.lon }]),
+                },
+              });
+            }}
+          >
+            <Text>{value.display_name}</Text>
+            <Text>{value.lon}</Text>
+            <Text>{value.lat}</Text>
+          </Pressable>
+        )
+      )}
     </ScrollView>
   );
 };

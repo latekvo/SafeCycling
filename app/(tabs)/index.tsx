@@ -41,10 +41,30 @@ export default function HomeScreen() {
 
           {/* Saved Locations Section */}
           <View style={styles.savedLocationsContainer}>
-            <Pressable style={styles.savedLocationButton}>
+            <Pressable
+              style={styles.savedLocationButton}
+              onPress={() => {
+                router.push({
+                  pathname: "/_maps",
+                  params: {
+                    cords: JSON.stringify([{ lat: 50.051061, lon: 19.944739 }]),
+                  },
+                });
+              }}
+            >
               <Text style={styles.savedLocationText}>🏠 Home</Text>
             </Pressable>
-            <Pressable style={styles.savedLocationButton}>
+            <Pressable
+              style={styles.savedLocationButton}
+              onPress={() => {
+                router.push({
+                  pathname: "/_maps",
+                  params: {
+                    cords: JSON.stringify([{ lat: 50.064405, lon: 19.960025 }]),
+                  },
+                });
+              }}
+            >
               <Text style={styles.savedLocationText}>🏢 Office</Text>
             </Pressable>
           </View>
