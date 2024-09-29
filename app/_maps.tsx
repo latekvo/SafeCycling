@@ -10,17 +10,8 @@ import * as Location from "expo-location";
 
 export default function MapsScreen() {
   const { width, height } = Dimensions.get("window");
-  // 50.083608, 19.940153;
-  // 50.078969, 19.971754
   const origin = { latitude: 37.78825, longitude: -122.4324 }; // Starting point
   const destination = { latitude: 37.78925, longitude: -122.4344 }; // Ending point
-
-  // Hardcoded coordinates for the path
-  // const coordinates = [
-  //   { latitude: 50.083608, longitude: 19.940153 },
-  //   { latitude: 37.78875, longitude: -122.433 },
-  //   { latitude: 50.078969, longitude: 19.971754 },
-  // ];
 
   const { cords } = useLocalSearchParams<{ cords: string }>();
 
@@ -44,35 +35,34 @@ export default function MapsScreen() {
         latitudeDelta: 0.05,
         longitudeDelta: 0.05,
       });
+      const presentationCordinats = [
+        { longitude: 19.9440906, latitude: 50.061225 },
+        { longitude: 19.9437044, latitude: 50.0607705 },
+        { longitude: 19.9426637, latitude: 50.0599922 },
+        { longitude: 19.9419556, latitude: 50.0600817 },
+        { longitude: 19.9416659, latitude: 50.0599715 },
+        { longitude: 19.9413119, latitude: 50.0603572 },
+        { longitude: 19.9401639, latitude: 50.0607773 },
+        { longitude: 19.939842, latitude: 50.0608393 },
+        { longitude: 19.9397025, latitude: 50.0608393 },
+        { longitude: 19.9383078, latitude: 50.0613008 },
+        { longitude: 19.9377284, latitude: 50.0605845 },
+        { longitude: 19.9376426, latitude: 50.0605432 },
+        { longitude: 19.937428, latitude: 50.0607291 },
+        { longitude: 19.9371169, latitude: 50.0609289 },
+        { longitude: 19.9366877, latitude: 50.0610735 },
+        { longitude: 19.9364517, latitude: 50.0607705 },
+        { longitude: 19.936323, latitude: 50.0605363 },
+        { longitude: 19.9362586, latitude: 50.0603434 },
+        { longitude: 19.9362586, latitude: 50.060247 },
+      ];
+
       setCoordinates([
         location,
         { latitude: coordinate[0].lat, longitude: coordinate[0].lon },
       ]);
     }
   }, []);
-
-  // const [location, setLocation] = useState<any>();
-  // const [errorMsg, setErrorMsg] = useState(String);
-
-  // const getPermission = async () => {
-  //   let { status } = await Location.requestForegroundPermissionsAsync();
-  //   if (status !== "granted") {
-  //     setErrorMsg("Permission to access location was denied");
-  //     return;
-  //   }
-
-  //   let currentLocation = await Location.getCurrentPositionAsync({});
-  //   setLocation(currentLocation);
-  // };
-
-  // let text = "Waiting..";
-  // if (errorMsg) {
-  //   text = errorMsg;
-  //   console.log(text);
-  // } else if (location) {
-  //   text = `Latitude: ${location.coords.latitude}, Longitude: ${location.coords.longitude}`;
-  //   console.log(text);
-  // }
 
   return (
     <SafeAreaView>
