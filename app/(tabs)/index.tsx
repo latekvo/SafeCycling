@@ -1,7 +1,7 @@
 import SearchBar from "@/components/SearchBar";
 import { StyleSheet, View, Text, Pressable, TextInput } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { useRouter } from "expo-router";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -36,7 +36,140 @@ export default function HomeScreen() {
               showsUserLocation
               scrollEnabled={false}
               moveOnMarkerPress={false}
-            />
+            >
+              <Marker
+                coordinate={{
+                  latitude: 50.06345,
+                  longitude: 19.93904,
+                }}
+                pinColor={"#dcbb16"} // any color
+                title={"Heavy pedestrian traffic!"}
+                description={"Heavy pedestrian traffic in the area!"}
+              >
+                <Text style={{ fontSize: 35 }}>⚠️</Text>
+                {/* Example emoji */}
+              </Marker>
+              <Marker
+                coordinate={{
+                  latitude: 50.06794,
+                  longitude: 19.95946,
+                }}
+                pinColor={"#dc1616"} // any color
+                title={"Intence trefic!"}
+                description={"Intence trefic in the area!"}
+              >
+                <Text style={{ fontSize: 35 }}>‼️</Text>
+                {/* Example emoji */}
+              </Marker>
+              <Marker
+                coordinate={{
+                  latitude: 50.06003,
+                  longitude: 19.92567,
+                }}
+                pinColor={"#dc1616"} // any color
+                title={"Intence trefic!"}
+                description={"Intence trefic in the area!"}
+              >
+                <Text style={{ fontSize: 35 }}>‼️</Text>
+                {/* Example emoji */}
+              </Marker>
+              <Marker
+                coordinate={{
+                  latitude: 50.05858,
+                  longitude: 19.93419,
+                }}
+                pinColor={"#16dc27"} // any color
+                title={"Low pedestrian traffic"}
+                description={"Low pedestrian traffic in the area!"}
+              >
+                <Text style={{ fontSize: 35 }}>✅</Text>
+                {/* Example emoji */}
+              </Marker>
+              <Marker
+                coordinate={{
+                  latitude: 50.0865,
+                  longitude: 19.92834,
+                }}
+                pinColor={"#16dc27"} // any color
+                title={"Low pedestrian traffic"}
+                description={"Low pedestrian traffic in the area!"}
+              >
+                <Text style={{ fontSize: 35 }}>✅</Text>
+                {/* Example emoji */}
+              </Marker>
+              <Marker
+                coordinate={{
+                  latitude: 50.07526,
+                  longitude: 19.94963,
+                }}
+                pinColor={"#16dc27"} // any color
+                title={"Low pedestrian traffic"}
+                description={"Low pedestrian traffic in the area!"}
+              >
+                <Text style={{ fontSize: 35 }}>✅</Text>
+                {/* Example emoji */}
+              </Marker>
+              <Marker
+                coordinate={{
+                  latitude: 50.08033,
+                  longitude: 19.97229,
+                }}
+                pinColor={"#dc1616"} // any color
+                title={"Intence trefic!"}
+                description={"Intence trefic in the area!"}
+              >
+                <Text style={{ fontSize: 35 }}>‼️</Text>
+                {/* Example emoji */}
+              </Marker>
+              <Marker
+                coordinate={{
+                  latitude: 50.05851,
+                  longitude: 19.9589,
+                }}
+                pinColor={"#dc1616"} // any color
+                title={"Intence trefic!"}
+                description={"Intence trefic in the area!"}
+              >
+                <Text style={{ fontSize: 35 }}>‼️</Text>
+                {/* Example emoji */}
+              </Marker>
+              <Marker
+                coordinate={{
+                  latitude: 50.07945,
+                  longitude: 19.91873,
+                }}
+                pinColor={"#dc1616"} // any color
+                title={"Intence trefic!"}
+                description={"Intence trefic in the area!"}
+              >
+                <Text style={{ fontSize: 35 }}>‼️</Text>
+                {/* Example emoji */}
+              </Marker>
+              <Marker
+                coordinate={{
+                  latitude: 50.05515,
+                  longitude: 19.93215,
+                }}
+                pinColor={"#dcbb16"} // any color
+                title={"Heavy pedestrian traffic!"}
+                description={"Heavy pedestrian traffic in the area!"}
+              >
+                <Text style={{ fontSize: 35 }}>⚠️</Text>
+                {/* Example emoji */}
+              </Marker>
+              <Marker
+                coordinate={{
+                  latitude: 50.05154,
+                  longitude: 19.9457,
+                }}
+                pinColor={"#dcbb16"} // any color
+                title={"Heavy pedestrian traffic!"}
+                description={"Heavy pedestrian traffic in the area!"}
+              >
+                <Text style={{ fontSize: 35 }}>⚠️</Text>
+                {/* Example emoji */}
+              </Marker>
+            </MapView>
           </Pressable>
 
           {/* Saved Locations Section */}
