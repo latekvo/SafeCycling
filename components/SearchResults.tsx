@@ -17,18 +17,22 @@ const SearchResults = ({
 }) => {
   const [queryResult, setQueryResults] = useState<any[]>([]);
 
-  // API rate limited to >1000
-  const baseRequestCooldown = 1250;
-  const requestBackoff = 500;
-  const maxConsecutiveFails = 5;
+  // API rate limited to >1000ms
 
-  const timeoutId = useRef<NodeJS.Timeout | null>(null);
-  const currentConsecutiveFails = useRef<number>(0);
-  const currentRequestCooldown = useRef(baseRequestCooldown);
+  const isQueryScheduled = useRef(false);
+  const isOnCooldown = useRef(false);
+  const cooldownStart = useRef(0);
+  const cooldownDuration = 1250;
+
+  const scheduleCooldownClear = () => {
+    cooldownStart.current = Date.now();
+    setTimeout(() => {
+      isOnCooldown.current = false;
+      isQueryScheduled.current = false;
+    }, cooldownDuration);
+  };
 
   const queryForResults = () => {
-    timeoutId.current = null;
-
     // geocode.maps.co a-p-i k-e-y, since this is a frontend-only proof-of-concept app,
     // there's no need or way for hiding it.
     // minimal obfuscation is used to prevent automatic github scrapers
@@ -43,9 +47,6 @@ const SearchResults = ({
       .then((response) => {
         console.log("API request success:", response);
 
-        currentConsecutiveFails.current = 0;
-        currentRequestCooldown.current = baseRequestCooldown;
-
         // lower importance - more important
         const sortedResults = (response as { importance: number }[]).sort(
           (left, right) => right.importance - left.importance
@@ -54,36 +55,28 @@ const SearchResults = ({
         setQueryResults(sortedResults);
       })
       .catch((error) => {
-        if (currentConsecutiveFails.current >= maxConsecutiveFails) {
-          console.log(`API max retries reached (${maxConsecutiveFails})`);
-          timeoutId.current = null;
-          return;
-        }
-
         console.log("API request error:", error);
-
-        currentConsecutiveFails.current += 1;
-        currentRequestCooldown.current += requestBackoff;
-
-        timeoutId.current = setTimeout(
-          queryForResults,
-          currentRequestCooldown.current
-        );
+        tryQueryForResults(); // retry
       });
   };
 
-  useEffect(() => {
-    if (timeoutId.current !== null) {
-      clearTimeout(timeoutId.current);
+  const tryQueryForResults = () => {
+    if (isOnCooldown.current) {
+      const remainingCooldown = 0;
+      setTimeout(queryForResults, remainingCooldown);
+    } else {
+      if (!isQueryScheduled.current) {
+        queryForResults();
+        isQueryScheduled.current = true;
+        isOnCooldown.current = true;
+        scheduleCooldownClear();
+      }
     }
+  };
 
-    currentConsecutiveFails.current = 0;
-
-    if (searchQuery != null) {
-      timeoutId.current = setTimeout(
-        queryForResults,
-        currentRequestCooldown.current
-      );
+  useEffect(() => {
+    if (searchQuery) {
+      tryQueryForResults();
     }
   }, [searchQuery]);
 
