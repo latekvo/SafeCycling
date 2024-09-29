@@ -93,6 +93,7 @@ export default function MapsScreen() {
             onSearch={(newTerm) => console.log(newTerm)}
             highContrast
             style={{ margin: 10 }}
+            redirects
           />
         </View>
       </View>

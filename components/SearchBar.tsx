@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useRouter } from "expo-router";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   TextInput,
@@ -12,15 +13,28 @@ const SearchBar = ({
   onSearch,
   highContrast = false,
   style,
+  redirects = false,
+  value,
 }: {
   onSearch: (updatedValue: string) => void;
   highContrast?: boolean;
   style?: StyleProp<ViewStyle>;
+  redirects?: boolean;
+  value?: string;
 }) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
+  const [searchQuery, setSearchQuery] = useState(value);
+
+  const navigationPath = "/navigate";
 
   const handleSearch = () => {
-    onSearch(searchQuery);
+    onSearch(searchQuery ?? "");
+
+    if (redirects) {
+      router.push({ pathname: navigationPath, params: { query: searchQuery } });
+      return;
+    }
   };
 
   return (
@@ -28,10 +42,11 @@ const SearchBar = ({
       <TextInput
         style={[styles.input, highContrast && styles.textContrast]}
         placeholder="Type your destination..."
-        value={searchQuery}
         onChangeText={setSearchQuery}
       />
-      <View style={highContrast && styles.submitContrast}>
+      <View
+        style={[styles.submitButton, highContrast && styles.submitContrast]}
+      >
         <Button title="Search" onPress={handleSearch} />
       </View>
     </View>
@@ -49,16 +64,21 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    height: 40,
+    height: 50,
     borderColor: "#ccc",
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     paddingLeft: 10,
     marginRight: 10,
     borderRadius: 5,
   },
+  submitButton: {
+    height: 50,
+    paddingHorizontal: 8,
+    justifyContent: "center",
+  },
   submitContrast: {
     backgroundColor: "white",
-    borderRadius: 10,
+    borderRadius: 5,
   },
 });
 

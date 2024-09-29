@@ -1,3 +1,5 @@
+# Running project
+
 ## First
 
 - `yarn`
@@ -9,11 +11,9 @@
 - `pod install`
 - use `Xcode` for running
 
-## android over USB
+Project currently only runs on `iOS` due to lack of support for free or open source maps on android.
 
-- `adb -d reverse tcp:8081 tcp:8081`
-- use `Android Studio` for running
+# Description
 
-## android emulator
-
-- use `Android Studio` for running
+EffiCycle is a navigation app designed for cyclists, prioritizing efficiency and comfort.
+Path finding is tuned for paths which avoiding high-speed roads, highways, and junctions, while favoring more direct side-streets, and leveled paths with minimal elevation changes.
