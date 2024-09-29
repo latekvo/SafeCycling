@@ -47,7 +47,9 @@ export default function HomeScreen() {
                 router.push({
                   pathname: "/_maps",
                   params: {
-                    cords: JSON.stringify([{ lat: 50.051061, lon: 19.944739 }]),
+                    cords: JSON.stringify([
+                      { lat: 50.9440906, lon: 19.944739 },
+                    ]),
                   },
                 });
               }}
@@ -60,7 +62,9 @@ export default function HomeScreen() {
                 router.push({
                   pathname: "/_maps",
                   params: {
-                    cords: JSON.stringify([{ lat: 50.064405, lon: 19.960025 }]),
+                    cords: JSON.stringify([
+                      { lat: 50.061225, lon: 19.9440906 },
+                    ]),
                   },
                 });
               }}

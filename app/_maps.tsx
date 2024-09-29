@@ -4,21 +4,21 @@ import MapView, { Marker, Polyline } from "react-native-maps";
 import SearchBar from "@/components/SearchBar";
 import { Link } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
-import * as Location from "expo-location";
 
 export default function MapsScreen() {
   const { width, height } = Dimensions.get("window");
-  const origin = { latitude: 37.78825, longitude: -122.4324 }; // Starting point
-  const destination = { latitude: 37.78925, longitude: -122.4344 }; // Ending point
 
-  const { cords } = useLocalSearchParams<{ cords: string }>();
+  const { cords: coordinateJson } = useLocalSearchParams<{ cords: string }>();
+
+  const location = { latitude: 50.061225, longitude: 19.9440906 };
 
   // Parse the 'cords' parameter since it's passed as a JSON string
-  const coordinate = cords ? JSON.parse(cords) : [];
+  const destinationCoordinate = JSON.parse(
+    coordinateJson ?? JSON.stringify([location])
+  )[0];
 
-  const location = { latitude: 50.083608, longitude: 19.940153 };
   const [region, setRegion] = useState({
     latitude: location.latitude,
     longitude: location.longitude,
@@ -28,14 +28,15 @@ export default function MapsScreen() {
   const [coordinates, setCoordinates] = useState<any>([]);
 
   useEffect(() => {
-    if (coordinate?.[0]?.lat != undefined) {
+    if (destinationCoordinate.lat) {
       setRegion({
-        latitude: coordinate[0].lat,
-        longitude: coordinate[0].lon,
+        latitude: destinationCoordinate.lat,
+        longitude: destinationCoordinate.lon,
         latitudeDelta: 0.05,
         longitudeDelta: 0.05,
       });
-      const presentationCordinats = [
+
+      const presentationCordinates = [
         { longitude: 19.9440906, latitude: 50.061225 },
         { longitude: 19.9437044, latitude: 50.0607705 },
         { longitude: 19.9426637, latitude: 50.0599922 },
@@ -57,10 +58,40 @@ export default function MapsScreen() {
         { longitude: 19.9362586, latitude: 50.060247 },
       ];
 
-      setCoordinates([
-        location,
-        { latitude: coordinate[0].lat, longitude: coordinate[0].lon },
-      ]);
+      const areSimilar = (
+        a: number,
+        b: number,
+        treshold: number = 0.006
+      ): boolean => Math.abs(a - b) < treshold;
+
+      // pathfinding demo
+      if (
+        areSimilar(
+          presentationCordinates.at(-1)!!.latitude,
+          destinationCoordinate.lat
+        ) &&
+        areSimilar(
+          presentationCordinates.at(-1)!!.longitude,
+          destinationCoordinate.lon
+        )
+      ) {
+        setCoordinates([
+          location,
+          {
+            latitude: destinationCoordinate.lat,
+            longitude: destinationCoordinate.lon,
+          },
+        ]);
+      } else {
+        // straight line from fixed point to destination
+        setCoordinates([
+          location,
+          {
+            latitude: destinationCoordinate.lat,
+            longitude: destinationCoordinate.lon,
+          },
+        ]);
+      }
     }
   }, []);
 
@@ -68,11 +99,11 @@ export default function MapsScreen() {
     <SafeAreaView>
       <View style={[styles.container, { width, height }]}>
         <MapView style={styles.map} initialRegion={region} showsUserLocation>
-          {!!coordinate?.[0]?.lat && (
+          {destinationCoordinate.lat && (
             <Marker
               coordinate={{
-                latitude: coordinate[0].lat,
-                longitude: coordinate[0].lon,
+                latitude: destinationCoordinate.lat,
+                longitude: destinationCoordinate.lon,
               }}
               pinColor={"#dc1619"} // any color
               title={"Destination"}
@@ -80,7 +111,7 @@ export default function MapsScreen() {
             />
           )}
           {/* <Marker coordinate={destination} title="End" /> */}
-          {!!coordinate?.[0]?.lon && (
+          {destinationCoordinate.lon && (
             <Polyline
               coordinates={coordinates}
               strokeWidth={4}
