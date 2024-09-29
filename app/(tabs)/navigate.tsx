@@ -1,12 +1,16 @@
 import SearchBar from "@/components/SearchBar";
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import SearchResults from "@/components/SearchResults";
+import { useState } from "react";
+import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function NavigationScreen() {
+  const [searchQuery, setSearchQuery] = useState<string | null>(null);
+
   return (
     <SafeAreaView style={styles.container}>
-      <SearchBar onSearch={(newTerm) => console.log(newTerm)}></SearchBar>
-      <ScrollView>{/* Searches history etc. */}</ScrollView>
+      <SearchBar onSearch={(newTerm) => setSearchQuery(newTerm)} />
+      <SearchResults searchQuery={searchQuery} />
     </SafeAreaView>
   );
 }
