@@ -65,10 +65,10 @@ export default function HomeScreen() {
               <Text style={styles.savedLocationText}>Location 2</Text>
             </Pressable>
           </View>
-
           <SearchBar
             onSearch={(newTerm) => console.log(newTerm)}
             style={{ marginTop: 20 }}
+            redirects
           />
         </View>
       </ScrollView>

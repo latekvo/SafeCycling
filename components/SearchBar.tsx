@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   View,
@@ -12,15 +13,28 @@ const SearchBar = ({
   onSearch,
   highContrast = false,
   style,
+  redirects = false,
+  value = "",
 }: {
   onSearch: (updatedValue: string) => void;
   highContrast?: boolean;
   style?: StyleProp<ViewStyle>;
+  redirects?: boolean;
+  value?: string;
 }) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
+  const [searchQuery, setSearchQuery] = useState(value);
+
+  const navigationPath = "/navigate";
 
   const handleSearch = () => {
     onSearch(searchQuery);
+
+    if (redirects) {
+      router.push({ pathname: navigationPath, params: { query: searchQuery } });
+      return;
+    }
   };
 
   return (
