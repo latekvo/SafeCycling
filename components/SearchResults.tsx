@@ -48,7 +48,7 @@ const SearchResults = ({
 
         // lower importance - more important
         const sortedResults = (response as { importance: number }[]).sort(
-          (left, right) => left.importance - right.importance
+          (left, right) => right.importance - left.importance
         );
 
         setQueryResults(sortedResults);

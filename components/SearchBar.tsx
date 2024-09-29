@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   TextInput,
@@ -14,7 +14,7 @@ const SearchBar = ({
   highContrast = false,
   style,
   redirects = false,
-  value = "",
+  value,
 }: {
   onSearch: (updatedValue: string) => void;
   highContrast?: boolean;
@@ -29,7 +29,7 @@ const SearchBar = ({
   const navigationPath = "/navigate";
 
   const handleSearch = () => {
-    onSearch(searchQuery);
+    onSearch(searchQuery ?? "");
 
     if (redirects) {
       router.push({ pathname: navigationPath, params: { query: searchQuery } });
@@ -42,10 +42,11 @@ const SearchBar = ({
       <TextInput
         style={[styles.input, highContrast && styles.textContrast]}
         placeholder="Type your destination..."
-        value={searchQuery}
         onChangeText={setSearchQuery}
       />
-      <View style={highContrast && styles.submitContrast}>
+      <View
+        style={[styles.submitButton, highContrast && styles.submitContrast]}
+      >
         <Button title="Search" onPress={handleSearch} />
       </View>
     </View>
@@ -63,16 +64,21 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    height: 40,
+    height: 50,
     borderColor: "#ccc",
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     paddingLeft: 10,
     marginRight: 10,
     borderRadius: 5,
   },
+  submitButton: {
+    height: 50,
+    paddingHorizontal: 8,
+    justifyContent: "center",
+  },
   submitContrast: {
     backgroundColor: "white",
-    borderRadius: 10,
+    borderRadius: 5,
   },
 });
 

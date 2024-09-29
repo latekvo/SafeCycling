@@ -7,16 +7,6 @@ import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
-  const savedLocalizationFirst = (location: string) => {
-    console.log(location);
-  };
-
-  const savedLocalizationSecond = (location: string) => {
-    console.log(location);
-  };
-  const handleMap = () => {
-    console.log("map");
-  };
   const region = {
     latitude: 50.0647,
     longitude: 19.945,
@@ -47,28 +37,22 @@ export default function HomeScreen() {
               scrollEnabled={false}
               moveOnMarkerPress={false}
             />
-            {/* <Text style={styles.mapText}>Map Preview</Text> */}
           </Pressable>
 
           {/* Saved Locations Section */}
           <View style={styles.savedLocationsContainer}>
-            <Pressable
-              style={styles.savedLocationButton}
-              onPress={() => savedLocalizationFirst("Location 1")}
-            >
-              <Text style={styles.savedLocationText}>Location 1</Text>
+            <Pressable style={styles.savedLocationButton}>
+              <Text style={styles.savedLocationText}>🏠 Home</Text>
             </Pressable>
-            <Pressable
-              style={styles.savedLocationButton}
-              onPress={() => savedLocalizationSecond("Location 2")}
-            >
-              <Text style={styles.savedLocationText}>Location 2</Text>
+            <Pressable style={styles.savedLocationButton}>
+              <Text style={styles.savedLocationText}>🏢 Office</Text>
             </Pressable>
           </View>
           <SearchBar
             onSearch={(newTerm) => console.log(newTerm)}
             style={{ marginTop: 20 }}
             redirects
+            highContrast
           />
         </View>
       </ScrollView>
@@ -85,8 +69,6 @@ const styles = StyleSheet.create({
   },
   userPreview: {
     marginTop: 10,
-    // height: 30,
-    // backgroundColor: "black",
     alignSelf: "flex-end",
   },
   userText: {
@@ -95,11 +77,11 @@ const styles = StyleSheet.create({
   },
   mapPreview: {
     marginTop: 20,
-    // backgroundColor: "#b0b0b0", // Medium gray for map preview
     height: 400,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
+    backgroundColor: "#ffffff",
   },
   mapText: {
     color: "#fff",
@@ -111,13 +93,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   savedLocationButton: {
-    backgroundColor: "#a0a0a0", // Darker gray for buttons
+    backgroundColor: "#ffffff", // Darker gray for buttons
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderRadius: 10,
   },
   savedLocationText: {
-    color: "#fff", // White text on dark gray button
+    color: "#000000", // White text on dark gray button
     fontSize: 16,
   },
   input: {
@@ -132,5 +114,6 @@ const styles = StyleSheet.create({
   map: {
     height: "100%",
     width: "100%",
+    opacity: 0.9,
   },
 });
